@@ -56,7 +56,10 @@ namespace Ceras.Formatters
 			// Encode image into stream
 			stream.Position = 0;
 			var format = BitmapModeToImgFormat(BitmapMode);
-			img.Save(stream, format);
+			lock (img)
+			{
+				img.Save(stream, format);
+			}
 
 			long sizeLong = stream.Length;
 			if (sizeLong > int.MaxValue)
